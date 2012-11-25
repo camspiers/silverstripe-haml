@@ -1,0 +1,17 @@
+{
+    "name": "camspiers/silverstripe-mthaml",
+    "type": "silverstripe-module",
+    "description": "Allows the use of haml in SilverStripe",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cam Spiers",
+            "email": "cameron@heyday.co.nz",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "composer/installers": "1.0.0",
+        "mthaml/mthaml": "dev-silverstripe"
+    }
+}
