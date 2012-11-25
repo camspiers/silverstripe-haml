@@ -12,7 +12,6 @@
     ],
     "require": {
         "composer/installers": "1.0.0",
-        "camspiers/autoloader-composer-silverstripe": "1.0.*",
         "mthaml/mthaml": "dev-silverstripe"
     }
 }
