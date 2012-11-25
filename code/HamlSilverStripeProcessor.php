@@ -21,7 +21,7 @@ class HamlSilverStripeProcessor
 	public function process()
 	{
 
-		$files = $this->glob($inputDirectory . '*.ss.haml');
+		$files = $this->glob($this->inputDirectory . '/*.ss.haml');
 
 		foreach ($files as $file) {
 
