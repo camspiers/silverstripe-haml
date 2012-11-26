@@ -13,11 +13,5 @@
     "require": {
         "composer/installers": "1.0.0",
         "mthaml/mthaml": "dev-silverstripe"
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/camspiers/MtHaml.git"
-        }
-    ]
+    }
 }
