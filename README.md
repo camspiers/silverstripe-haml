@@ -10,13 +10,25 @@ SilverStripe Haml is licensed under an [MIT license](http://camspiers.mit-licens
 
 Installing from composer is easy, 
 
-Create or edit a `composer.json` file in the root of your SilverStripe project, and make sure the following is present.
+Create or edit a `composer.json` file in the root of your SilverStripe project, and make sure the following is present. Currently `silverstripe-haml` is in development so it isn't available through packagist.
 
 ```json
 {
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/camspiers/silverstripe-haml.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/camspiers/MtHaml.git"
+        }
+    ],
     "require": {
-        "camspiers/silverstripe-haml": "*"
-    }
+        "camspiers/autoloader-composer-silverstripe": "1.0.*",
+        "camspiers/silverstripe-haml": "dev-master"
+    },
+    "minimum-stability": "dev"
 }
 ```
 
