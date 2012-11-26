@@ -8,29 +8,47 @@ class HamlSilverStripeProcessor
 	protected $inputDirectory;
 	protected $outputDirectory;
 	protected $compiler;
+	protected $extension = '.ss.haml';
 
-	public function __construct($inputDirectory, $outputDirectory)
+	public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false)
 	{
 
-		$this->inputDirectory = $inputDirectory;
-		$this->outputDirectory = $outputDirectory;
-		$this->compiler = new Environment(
+		$msg = 'Directory does not exist or is not writable: %s';
+
+		if (file_exists($inputDirectory) && is_writable($inputDirectory)) {
+			$this->inputDirectory = $inputDirectory;
+		} else {
+			throw new \Exception(sprintf($msg, $inputDirectory));
+		}
+
+		if (file_exists($outputDirectory) && is_writable($outputDirectory)) {
+			$this->outputDirectory = $outputDirectory;
+		} else {
+			throw new \Exception(sprintf($msg, $outputDirectory));
+		}
+		
+		$this->compiler = $compiler ? $compiler : new Environment(
 			'silverstripe',
 			array(
-				'escape_attrs' => false
+				'escape_attrs' => false,
+				'enable_escaper' => false
 			)
 		);
+
+		if ($extension) {
+			$this->extension = $extension;
+		}
 
 	}
 
 	public function process()
 	{
 
-		$files = $this->glob($this->inputDirectory . '/*.ss.haml');
+		$files = $this->glob($this->inputDirectory . '/*' . $this->extension);
 
 		foreach ($files as $file) {
 
-			$basename = basename($file, '.ss.haml');
+			$basename = basename($file, $this->extension);
 			$dirname = str_replace(
 				$this->inputDirectory,
 				$this->outputDirectory,
