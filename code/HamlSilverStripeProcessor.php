@@ -14,7 +14,12 @@ class HamlSilverStripeProcessor
 
 		$this->inputDirectory = $inputDirectory;
 		$this->outputDirectory = $outputDirectory;
-		$this->compiler = new Environment('silverstripe');
+		$this->compiler = new Environment(
+			'silverstripe',
+			array(
+				'escape_attrs' => false
+			)
+		);
 
 	}
 
