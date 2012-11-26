@@ -1,8 +1,8 @@
-#SilverStripe MtHaml
+#SilverStripe Haml
 
 ##License
 
-SilverStripe MtHaml is licensed under an [MIT license](http://camspiers.mit-license.org/)
+SilverStripe Haml is licensed under an [MIT license](http://camspiers.mit-license.org/)
 
 ##Installation
 
@@ -15,7 +15,7 @@ Create or edit a `composer.json` file in the root of your SilverStripe project, 
 ```json
 {
     "require": {
-        "camspiers/silverstripe-mthaml": "*"
+        "camspiers/silverstripe-haml": "*"
     }
 }
 ```

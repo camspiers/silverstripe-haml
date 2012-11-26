@@ -1,5 +1,5 @@
 {
-    "name": "camspiers/silverstripe-mthaml",
+    "name": "camspiers/silverstripe-haml",
     "type": "silverstripe-module",
     "description": "Allows the use of haml in SilverStripe",
     "license": "MIT",
