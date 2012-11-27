@@ -34,6 +34,29 @@ Create or edit a `composer.json` file in the root of your SilverStripe project, 
 
 After completing this step, navigate in Terminal or similar to the SilverStripe root directory and run `composer install` or `composer update` depending on whether or not you have composer already in use.
 
+##Usage
+
+Create a folder called `haml` in your current theme.
+
+	themes/mytheme/haml
+
+In this folder you should replicate the same folder and file structure as in `themes/mytheme/templates`
+
+For example:
+	themes/mytheme/haml
+	themes/mytheme/haml/Layout
+	themes/mytheme/haml/Includes
+
+In this folder place your haml files, the default extension is `.ss.haml`
+
+Every haml file will be compiled into `themes/mytheme/templates` in the appropriate directory
+
+###Compile by flush=1
+
+
+###Compile by grunt
+
+
 ##Contributing
 
 ###Code guidelines

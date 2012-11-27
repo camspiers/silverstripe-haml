@@ -5,86 +5,86 @@ use MtHaml\Environment;
 class HamlSilverStripeProcessor
 {
 
-	protected $inputDirectory;
-	protected $outputDirectory;
-	protected $compiler;
-	protected $extension = '.ss.haml';
+    protected $inputDirectory;
+    protected $outputDirectory;
+    protected $compiler;
+    protected $extension = '.ss.haml';
 
-	public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false)
-	{
+    public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false)
+    {
 
-		$msg = 'Directory does not exist or is not writable: %s';
+        $msg = 'Directory does not exist or is not writable: %s';
 
-		if (file_exists($inputDirectory) && is_writable($inputDirectory)) {
-			$this->inputDirectory = $inputDirectory;
-		} else {
-			throw new \Exception(sprintf($msg, $inputDirectory));
-		}
+        if (file_exists($inputDirectory) && is_writable($inputDirectory)) {
+            $this->inputDirectory = $inputDirectory;
+        } else {
+            throw new \Exception(sprintf($msg, $inputDirectory));
+        }
 
-		if (file_exists($outputDirectory) && is_writable($outputDirectory)) {
-			$this->outputDirectory = $outputDirectory;
-		} else {
-			throw new \Exception(sprintf($msg, $outputDirectory));
-		}
-		
-		$this->compiler = $compiler ? $compiler : new Environment(
-			'silverstripe',
-			array(
-				'escape_attrs' => false,
-				'enable_escaper' => false
-			)
-		);
+        if (file_exists($outputDirectory) && is_writable($outputDirectory)) {
+            $this->outputDirectory = $outputDirectory;
+        } else {
+            throw new \Exception(sprintf($msg, $outputDirectory));
+        }
 
-		if ($extension) {
-			$this->extension = $extension;
-		}
+        $this->compiler = $compiler ? $compiler : new Environment(
+            'silverstripe',
+            array(
+                'escape_attrs' => false,
+                'enable_escaper' => false
+            )
+        );
 
-	}
+        if ($extension) {
+            $this->extension = $extension;
+        }
 
-	public function process()
-	{
+    }
 
-		$files = $this->glob($this->inputDirectory . '/*' . $this->extension);
+    public function process($files = false)
+    {
 
-		foreach ($files as $file) {
+        $files = is_array($files) ? $files : $this->glob($this->inputDirectory . '/*' . $this->extension);
 
-			$basename = basename($file, $this->extension);
-			$dirname = str_replace(
-				$this->inputDirectory,
-				$this->outputDirectory,
-				dirname($file)
-			);
+        foreach ($files as $file) {
 
-			if (!file_exists($dirname)) {
+            $basename = basename($file, $this->extension);
+            $dirname = str_replace(
+                $this->inputDirectory,
+                $this->outputDirectory,
+                dirname($file)
+            );
 
-				mkdir($dirname, 0755, true);
+            if (!file_exists($dirname)) {
 
-			}
+                mkdir($dirname, 0755, true);
 
-			file_put_contents(
-				$dirname . '/' . $basename . '.ss',
-				$this->compiler->compileString(
-					file_get_contents($file),
-					$file
-				)
-			);
+            }
 
-		}
+            file_put_contents(
+                $dirname . '/' . $basename . '.ss',
+                $this->compiler->compileString(
+                    file_get_contents($file),
+                    $file
+                )
+            );
 
-	}
+        }
 
-	function glob($pattern)
-	{
+    }
 
-		$files = glob($pattern);
-		$dirs = glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT);
+    public function glob($pattern)
+    {
 
-		foreach ($dirs as $dir) {
-			$files = array_merge($files, $this->glob($dir . '/' . basename($pattern)));
-		}
+        $files = glob($pattern);
+        $dirs = glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT);
 
-		return $files;
+        foreach ($dirs as $dir) {
+            $files = array_merge($files, $this->glob($dir . '/' . basename($pattern)));
+        }
 
-	}
+        return $files;
+
+    }
 
 }
