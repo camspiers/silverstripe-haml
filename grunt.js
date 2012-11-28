@@ -12,7 +12,7 @@ module.exports = function( grunt ) {
         files: [ '../themes/*/haml/**/*.ss.haml' ],
         tasks: [ 'haml' ],
         options: {
-          debounceDelay: 1000
+          debounceDelay: 2000
         }
       }
     },    
