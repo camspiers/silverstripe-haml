@@ -1,5 +1,7 @@
 <?php
 
+use Colors\Color;
+
 class HamlSilverStripeController extends CliController
 {
 
@@ -13,9 +15,25 @@ class HamlSilverStripeController extends CliController
             $path . '/templates'
         );
 
-        $hamlProcessor->process();
+        $files = $hamlProcessor->process();
 
-        echo 'Haml files compiled', PHP_EOL;
+        $c = new Color('', true);
+
+        if (is_array($files) && count($files) > 0) {
+
+            echo $c('Haml files compiled:')->green(), PHP_EOL;
+
+            foreach ($files as $haml => $ss) {
+
+                echo $c($haml . ' => ' . $ss)->blue(), PHP_EOL;
+
+            }
+
+        } else {
+
+            echo $c('No files compiled')->red(), PHP_EOL;
+
+        }
 
     }
 

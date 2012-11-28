@@ -13,6 +13,6 @@
     "require": {
         "composer/installers": "1.0.0",
         "mthaml/mthaml": "dev-silverstripe",
-        "kevinlebrun/colors.php": "0.2.*"
+        "kevinlebrun/colors.php": "dev-force-tty"
     }
 }

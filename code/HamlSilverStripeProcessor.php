@@ -50,30 +50,44 @@ class HamlSilverStripeProcessor
     {
 
         $files = is_array($files) ? $files : $this->glob($this->inputDirectory . '/*' . $this->extension);
+        $mapping = array();
 
-        foreach ($files as $file) {
+        if (is_array($files)) {
 
-            $basename = basename($file, $this->extension);
-            $dirname = str_replace(
-                $this->inputDirectory,
-                $this->outputDirectory,
-                dirname($file)
-            );
+            foreach ($files as $file) {
 
-            if (!file_exists($dirname)) {
+                $basename = basename($file, $this->extension);
+                $dirname = str_replace(
+                    $this->inputDirectory,
+                    $this->outputDirectory,
+                    dirname($file)
+                );
+                $ssName = $dirname . '/' . $basename . '.ss';
 
-                mkdir($dirname, 0755, true);
+                if (!file_exists($dirname)) {
+
+                    mkdir($dirname, 0755, true);
+
+                }
+
+                $mapping[str_replace($this->inputDirectory, '', $file)] = str_replace($this->outputDirectory, '', $ssName);
+
+                file_put_contents(
+                    $ssName,
+                    sprintf($this->header, $file) . PHP_EOL .
+                    $this->compiler->compileString(
+                        file_get_contents($file),
+                        $file
+                    )
+                );
 
             }
 
-            file_put_contents(
-                $dirname . '/' . $basename . '.ss',
-                sprintf($this->header, $file) . PHP_EOL .
-                $this->compiler->compileString(
-                    file_get_contents($file),
-                    $file
-                )
-            );
+            return $mapping;
+
+        } else {
+
+            return false;
 
         }
 

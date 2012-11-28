@@ -8,26 +8,33 @@ module.exports = function( grunt ) {
 
   grunt.initConfig( {
     watch: {
-      files: [ '../themes/*/haml/**/*.ss.haml' ],
-      tasks: [ 'haml' ]
+      haml: {
+        files: [ '../themes/*/haml/**/*.ss.haml' ],
+        tasks: [ 'haml' ],
+        options: {
+          debounceDelay: 1000
+        }
+      }
     },    
   } );
   
   grunt.registerTask( 'haml', function (deets) {
 
     var done = this.async(),
-      cmd = '../sapphire/sake haml' + ( argv.theme ? ' theme=' + argv.theme : '' );
+      args = [ 'haml/process' ];
 
-    sys.puts( 'Running: ' + cmd );
+    if ( argv.theme ) {
+      args.push( '--theme ' + argv.theme );
+    }
 
     exec(
-      cmd,
-      function (error, stdout, stderr) {
-        if (stdout) {
-          sys.puts(stdout);
+      '../sapphire/sake ' + args.join( ' ' ),
+      function ( error, stdout, stderr ) {
+        if ( stdout ) {
+          sys.puts( stdout );
         }
-        if (stderr) {
-          sys.puts(stderr);
+        if ( stderr ) {
+          sys.puts( stderr );
         }
         done();
       }
