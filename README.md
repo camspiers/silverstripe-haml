@@ -22,6 +22,10 @@ Create or edit a `composer.json` file in the root of your SilverStripe project, 
         {
             "type": "git",
             "url": "https://github.com/camspiers/MtHaml.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/camspiers/colors.php.git"
         }
     ],
     "require": {
