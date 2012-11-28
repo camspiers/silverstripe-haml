@@ -22,7 +22,7 @@ module.exports = function( grunt ) {
   grunt.registerTask( 'haml', function () {
 
     var done = this.async(),
-      args = [ 'haml/process' ];
+        args = [ 'haml/process' ];
 
     if ( theme ) {
       args.push( '--theme ' + theme );
