@@ -47,6 +47,7 @@ Create a folder called `haml` in your current theme.
 In this folder you should replicate the same folder and file structure as in `themes/mytheme/templates`
 
 For example:
+
 	themes/mytheme/haml
 	themes/mytheme/haml/Layout
 	themes/mytheme/haml/Includes
