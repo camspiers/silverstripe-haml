@@ -19,7 +19,7 @@ module.exports = function( grunt ) {
     },    
   } );
   
-  grunt.registerTask( 'haml', function (deets) {
+  grunt.registerTask( 'haml', function () {
 
     var done = this.async(),
       args = [ 'haml/process' ];
