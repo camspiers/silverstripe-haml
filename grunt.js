@@ -1,15 +1,16 @@
 module.exports = function( grunt ) {
 
-  var exec = require('child_process').exec,
-      argv = require('optimist').argv,
-      sys = require('sys');
+  var exec  = require('child_process').exec,
+      argv  = require('optimist').argv,
+      sys   = require('sys'),
+      theme = argv.theme ? argv.theme : false;
   
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
 
   grunt.initConfig( {
     watch: {
       haml: {
-        files: [ '../themes/*/haml/**/*.ss.haml' ],
+        files: [ '../themes/' + ( theme ? theme : '*' ) + '/haml/**/*.ss.haml' ],
         tasks: [ 'haml' ],
         options: {
           debounceDelay: 2000
@@ -23,8 +24,8 @@ module.exports = function( grunt ) {
     var done = this.async(),
       args = [ 'haml/process' ];
 
-    if ( argv.theme ) {
-      args.push( '--theme ' + argv.theme );
+    if ( theme ) {
+      args.push( '--theme ' + theme );
     }
 
     exec(
