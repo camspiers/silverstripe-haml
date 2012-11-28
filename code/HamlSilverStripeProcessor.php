@@ -9,8 +9,9 @@ class HamlSilverStripeProcessor
     protected $outputDirectory;
     protected $compiler;
     protected $extension = '.ss.haml';
+    protected $header = "<%%-- This template was automatically compiled from '%s', do not edit directly --%%>";
 
-    public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false)
+    public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false, $header = false)
     {
 
         $msg = 'Directory does not exist or is not writable: %s';
@@ -39,6 +40,10 @@ class HamlSilverStripeProcessor
             $this->extension = $extension;
         }
 
+        if ($header) {
+            $this->header = $header;
+        }
+
     }
 
     public function process($files = false)
@@ -63,6 +68,7 @@ class HamlSilverStripeProcessor
 
             file_put_contents(
                 $dirname . '/' . $basename . '.ss',
+                sprintf($this->header, $file) . PHP_EOL .
                 $this->compiler->compileString(
                     file_get_contents($file),
                     $file

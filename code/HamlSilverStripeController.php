@@ -6,7 +6,7 @@ class HamlSilverStripeController extends CliController
     public function process()
     {
 
-        $path = THEMES_PATH . '/' . SSViewer::current_theme();
+        $path = THEMES_PATH . '/' . (isset($_GET['theme']) ? $_GET['theme'] : SSViewer::current_theme());
 
         $hamlProcessor = new HamlSilverStripeProcessor(
             $path . '/haml',
