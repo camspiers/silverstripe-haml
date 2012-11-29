@@ -1,9 +1,5 @@
 #SilverStripe Haml
 
-##License
-
-SilverStripe Haml is licensed under an [MIT license](http://camspiers.mit-license.org/)
-
 ##Dependancies
 
 SilverStripe haml depends directly on numerous libraries others have developed. The work of the authors of the following projects is greatly appreciated:
@@ -116,3 +112,8 @@ This project follows the standards defined in:
 
 * [PSR-1](https://github.com/pmjones/fig-standards/blob/psr-1-style-guide/proposed/PSR-1-basic.md)
 * [PSR-2](https://github.com/pmjones/fig-standards/blob/psr-1-style-guide/proposed/PSR-2-advanced.md)
+
+---
+##License
+
+SilverStripe Haml is released under the [MIT license](http://camspiers.mit-license.org/)
