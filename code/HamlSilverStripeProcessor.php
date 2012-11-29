@@ -76,9 +76,9 @@ class HamlSilverStripeProcessor
                     $prettyHamlName = str_replace($this->inputDirectory, basename($this->inputDirectory), $file);
                     $prettyTemplateName = str_replace($this->outputDirectory, basename($this->outputDirectory), $templateName);
 
-                    $compiledString = 
+                    $compiledString =
                         sprintf($this->header, $prettyHamlName) .
-                        PHP_EOL . 
+                        PHP_EOL .
                         $this->compiler->compileString(
                             file_get_contents($file),
                             $file
