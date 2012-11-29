@@ -80,7 +80,7 @@ Every haml file will be compiled into the appropriate location in `themes/mythem
 
 ###Compile by grunt
 
-Grunt is the preferred method of compilation. To set up, first make sure you habe grunt install globally (this step requires `node` and `npm`).
+Grunt is the preferred method of compilation. To set up, first make sure you have grunt install globally (this step requires `node` and `npm`).
 
 This can be done via `npm`
 
