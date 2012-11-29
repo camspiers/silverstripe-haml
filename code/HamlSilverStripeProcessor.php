@@ -71,16 +71,18 @@ class HamlSilverStripeProcessor
 
                 }
 
-                $mapping[str_replace($this->inputDirectory, '', $file)] = str_replace($this->outputDirectory, '', $templateName);
-
-                file_put_contents(
-                    $ssName,
-                    sprintf($this->header, $file) . PHP_EOL .
-                    $this->compiler->compileString(
-                        file_get_contents($file),
-                        $file
-                    )
+                $compiledString = sprintf($this->header, $file) . PHP_EOL . $this->compiler->compileString(
+                    file_get_contents($file),
+                    $file
                 );
+
+                if ($compiledString != file_get_contents($templateName)) {
+
+                    $mapping[str_replace($this->inputDirectory, '', $file)] = str_replace($this->outputDirectory, '', $templateName);
+
+                    file_put_contents($templateName, $compiledString);
+
+                }
 
             }
 
