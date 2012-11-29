@@ -50,43 +50,53 @@ class HamlSilverStripeProcessor
     {
 
         $files = is_array($files) ? $files : $this->glob($this->inputDirectory . '/*' . $this->extension);
-        $mapping = array();
+        $compiled = array();
 
         if (is_array($files)) {
 
             foreach ($files as $file) {
 
-                $basename = basename($file, $this->extension);
-                $dirname = str_replace(
-                    $this->inputDirectory,
-                    $this->outputDirectory,
-                    dirname($file)
-                );
+                if (file_exists($file)) {
 
-                $templateName = $dirname . '/' . $basename . '.ss';
+                    $basename = basename($file, $this->extension);
 
-                if (!file_exists($dirname)) {
+                    $dirname = str_replace(
+                        $this->inputDirectory,
+                        $this->outputDirectory,
+                        dirname($file)
+                    );
 
-                    mkdir($dirname, 0755, true);
+                    if (!file_exists($dirname)) {
 
-                }
+                        mkdir($dirname, 0755, true);
 
-                $compiledString = sprintf($this->header, $file) . PHP_EOL . $this->compiler->compileString(
-                    file_get_contents($file),
-                    $file
-                );
+                    }
 
-                if ($compiledString != file_get_contents($templateName)) {
+                    $templateName = $dirname . '/' . $basename . '.ss';
+                    $prettyHamlName = str_replace($this->inputDirectory, basename($this->inputDirectory), $file);
+                    $prettyTemplateName = str_replace($this->outputDirectory, basename($this->outputDirectory), $templateName);
 
-                    $mapping[str_replace($this->inputDirectory, '', $file)] = str_replace($this->outputDirectory, '', $templateName);
+                    $compiledString = 
+                        sprintf($this->header, $prettyHamlName) .
+                        PHP_EOL . 
+                        $this->compiler->compileString(
+                            file_get_contents($file),
+                            $file
+                        );
 
-                    file_put_contents($templateName, $compiledString);
+                    if ($compiledString != file_get_contents($templateName)) {
+
+                        file_put_contents($templateName, $compiledString);
+
+                        $compiled[$prettyHamlName] = $prettyTemplateName;
+
+                    }
 
                 }
 
             }
 
-            return $mapping;
+            return $compiled;
 
         } else {
             return false;
