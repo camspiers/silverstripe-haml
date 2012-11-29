@@ -68,7 +68,7 @@ In this folder place your haml files, the default extension is `.ss.haml`
 
 Every haml file will be compiled into the appropriate location in `themes/mytheme/templates`
 
-##Compilation
+##Haml Compilation
 
 ###Compile by grunt
 
