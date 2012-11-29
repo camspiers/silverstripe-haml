@@ -21,7 +21,7 @@ class HamlSilverStripeController extends CliController
         $c = new Color('');
 
         if (Director::is_cli() && !isset($_GET['nocolor'])) {
-            $c->setForceStyles();
+            $c->setForceStyle(true);
         }
 
         if (is_array($files) && count($files) > 0) {
