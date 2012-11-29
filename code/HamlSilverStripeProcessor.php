@@ -89,7 +89,6 @@ class HamlSilverStripeProcessor
             return $mapping;
 
         } else {
-
             return false;
 
         }
