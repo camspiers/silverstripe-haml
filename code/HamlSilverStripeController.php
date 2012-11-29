@@ -18,7 +18,7 @@ class HamlSilverStripeController extends CliController
 
         $files = $hamlProcessor->process();
 
-        $c = new Color('', !isset($_GET['nocolor']));
+        $c = new Color('', Director::is_cli() && !isset($_GET['nocolor']));
 
         if (is_array($files) && count($files) > 0) {
 

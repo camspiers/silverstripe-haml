@@ -4,13 +4,22 @@
 
 SilverStripe Haml is licensed under an [MIT license](http://camspiers.mit-license.org/)
 
+##Dependancies
+
+SilverStripe haml depends directly on numerous libraries others have developed. The work of the authors of the following projects is greatly appreciated:
+
+* `MtHaml`
+* `grunt`
+* `grunt-contrib-watch`
+* `colors.php`
+* `composer`
+* `optimist`
+
 ##Installation
 
 ###Composer
 
-Installing from composer is easy, 
-
-Create or edit a `composer.json` file in the root of your SilverStripe project, and make sure the following is present. Currently `silverstripe-haml` is in development so it isn't available through packagist.
+Create or edit a `composer.json` file in the root of your SilverStripe project, and make sure the following is present.
 
 ```json
 {
@@ -36,15 +45,26 @@ Create or edit a `composer.json` file in the root of your SilverStripe project, 
 }
 ```
 
+Currently SilverStripe haml is in development so it isn't available through packagist (nor are my customisations needs from `MtHaml` and `colors.php`).
+
 After completing this step, navigate in Terminal or similar to the SilverStripe root directory and run `composer install` or `composer update` depending on whether or not you have composer already in use.
 
-##Usage
+##Overview
 
-Create a folder called `haml` in your current theme.
+SilverStripe haml is implemented by compiling `ss.haml` files into `.ss` template files. In haml you can implement anything you can in straight `.ss` files.
+
+SilverStripe haml provides two main mechanisms for compilation:
+
+* A grunt build process which uses `grunt-contrib-watch` to watch your `.ss.haml` files for changes and compile when changed.
+* A SilverStripe controller executable via `sake` or url.
+
+##Getting started
+
+To get started, create a folder called `haml` in your current theme.
 
 	themes/mytheme/haml
 
-In this folder you should replicate the same folder and file structure as in `themes/mytheme/templates`
+In this folder you should replicate the same folder and file structure as you would in `themes/mytheme/templates`
 
 For example:
 
@@ -54,13 +74,39 @@ For example:
 
 In this folder place your haml files, the default extension is `.ss.haml`
 
-Every haml file will be compiled into `themes/mytheme/templates` in the appropriate directory
+Every haml file will be compiled into the appropriate location in `themes/mytheme/templates`
 
-###Compile by flush=1
-
+##Compilation
 
 ###Compile by grunt
 
+Grunt is the preferred method of compilation. To set up, first make sure you habe grunt install globally (this step requires `node` and `npm`).
+
+This can be done via `npm`
+
+	npm install -g grunt
+
+Once grunt is installed and you have SilverStripe haml in your project, from the `silverstripe-haml` folder run:
+
+	npm install
+
+This will download SilverStripe haml's required npm dependancies.
+
+Once this is done, you are good to go. From the `silverstripe-haml` directory run:
+
+	grunt
+	
+This will launch the grunt haml task and watch your files for any changes.
+
+###Compile by controller
+
+If you are logged in as an admin, you can compile all `.ss.haml` templates in the current theme by running 
+
+	http://my.host/haml/process/
+
+Or alternatively via `sake`
+
+	sake haml/process
 
 ##Contributing
 
