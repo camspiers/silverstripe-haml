@@ -37,7 +37,7 @@ Create or edit a `composer.json` file in the root of your SilverStripe project, 
 }
 ```
 
-Currently SilverStripe haml is in development so it isn't available through packagist (nor are my customisations needs from `MtHaml` and `colors.php`).
+Currently SilverStripe haml is in development so it isn't available through packagist (nor are my customisations needed from `MtHaml`).
 
 After completing this step, navigate in Terminal or similar to the SilverStripe root directory and run `composer install` or `composer update` depending on whether or not you have composer already in use.
 
