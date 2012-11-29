@@ -9,6 +9,7 @@ class HamlSilverStripeController extends CliController
     {
 
         $path = THEMES_PATH . '/' . (isset($_GET['theme']) ? $_GET['theme'] : SSViewer::current_theme());
+        $files = isset($_GET['files']) ? explode($_GET['files']) : false;
 
         $hamlProcessor = new HamlSilverStripeProcessor(
             $path . '/haml',
@@ -21,11 +22,16 @@ class HamlSilverStripeController extends CliController
 
         if (is_array($files) && count($files) > 0) {
 
-            echo $c('Haml files compiled:')->green(), PHP_EOL;
+            echo PHP_EOL, $c('Haml files compiled')->green->underline->bold, PHP_EOL, PHP_EOL;
+
+            $length = max(array_map('strlen', array_keys($files)));
 
             foreach ($files as $haml => $ss) {
 
-                echo $c($haml . ' => ' . $ss)->blue(), PHP_EOL;
+                echo $c(str_pad($haml, $length, ' '))->blue;
+                echo $c(' => ')->red->bold;
+                echo $c($ss)->blue;
+                echo PHP_EOL;
 
             }
 

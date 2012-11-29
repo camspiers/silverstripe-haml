@@ -62,7 +62,8 @@ class HamlSilverStripeProcessor
                     $this->outputDirectory,
                     dirname($file)
                 );
-                $ssName = $dirname . '/' . $basename . '.ss';
+
+                $templateName = $dirname . '/' . $basename . '.ss';
 
                 if (!file_exists($dirname)) {
 
@@ -70,7 +71,7 @@ class HamlSilverStripeProcessor
 
                 }
 
-                $mapping[str_replace($this->inputDirectory, '', $file)] = str_replace($this->outputDirectory, '', $ssName);
+                $mapping[str_replace($this->inputDirectory, '', $file)] = str_replace($this->outputDirectory, '', $templateName);
 
                 file_put_contents(
                     $ssName,
