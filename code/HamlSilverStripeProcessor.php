@@ -9,7 +9,7 @@ class HamlSilverStripeProcessor
     protected $outputDirectory;
     protected $compiler;
     protected $extension = '.ss.haml';
-    protected $header = "<%%-- This template was automatically compiled from '%s', do not edit directly --%%>";
+    protected $header = "<%%--\nCompiled from '%s'\nDo not edit\n--%%>";
 
     public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false, $header = false)
     {
@@ -78,7 +78,6 @@ class HamlSilverStripeProcessor
 
                     $compiledString =
                         sprintf($this->header, $prettyHamlName) .
-                        PHP_EOL .
                         $this->compiler->compileString(
                             file_get_contents($file),
                             $file
