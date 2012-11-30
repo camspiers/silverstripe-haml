@@ -1,6 +1,7 @@
 <?php
 
 use Colors\Color;
+use MtHaml\Exception\SyntaxErrorException;
 
 class HamlSilverStripeController extends CliController
 {
@@ -16,12 +17,21 @@ class HamlSilverStripeController extends CliController
             $path . '/templates'
         );
 
-        $files = $hamlProcessor->process();
-
         $c = new Color('');
 
         if (Director::is_cli() && !isset($_GET['nocolor'])) {
             $c->setForceStyle(true);
+        }
+
+        try {
+
+            $files = $hamlProcessor->process();
+
+        } catch (SyntaxErrorException $e) {
+
+            file_put_contents('php://stderr', $c($e->getMessage())->red);
+            exit;
+
         }
 
         if (is_array($files) && count($files) > 0) {

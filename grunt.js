@@ -2,7 +2,6 @@ module.exports = function( grunt ) {
 
   var exec  = require('child_process').exec,
       argv  = require('optimist').argv,
-      sys   = require('sys'),
       theme = argv.theme ? argv.theme : false;
   
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
@@ -31,13 +30,16 @@ module.exports = function( grunt ) {
     exec(
       '../sapphire/sake ' + args.join( ' ' ),
       function ( error, stdout, stderr ) {
+        var hasErr = false;
         if ( stdout ) {
-          sys.puts( stdout );
+          grunt.log.write( stdout );
         }
         if ( stderr ) {
-          sys.puts( stderr );
+          grunt.log.error();
+          grunt.log.error( stderr );
+          hasErr = true;
         }
-        done();
+        done( !hasErr );
       }
     );
 
