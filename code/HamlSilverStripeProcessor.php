@@ -102,7 +102,7 @@ class HamlSilverStripeProcessor
 
                     }
 
-                    if ($compiledString != file_get_contents($templateName)) {
+                    if (!file_exists($templateName) || $compiledString != file_get_contents($templateName)) {
 
                         file_put_contents($templateName, $compiledString);
 
