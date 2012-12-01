@@ -1,6 +1,5 @@
 <?php
 
-use Colors\Color;
 use MtHaml\Exception\SyntaxErrorException;
 
 class HamlSilverStripeController extends CliController
@@ -9,15 +8,10 @@ class HamlSilverStripeController extends CliController
     public function process()
     {
 
-        $path = THEMES_PATH . '/' . (isset($_GET['theme']) ? $_GET['theme'] : SSViewer::current_theme());
-        $files = isset($_GET['files']) ? explode($_GET['files']) : false;
+        $dic = new HamlSilverStripeContainer;
 
-        $hamlProcessor = new HamlSilverStripeProcessor(
-            $path . '/haml',
-            $path . '/templates'
-        );
-
-        $c = new Color('');
+        $hamlProcessor = $dic['processor'];
+        $c = $dic['colors'];
 
         if (Director::is_cli() && !isset($_GET['nocolor'])) {
             $c->setForceStyle(true);
@@ -25,7 +19,7 @@ class HamlSilverStripeController extends CliController
 
         try {
 
-            $files = $hamlProcessor->process();
+            $files = $hamlProcessor->process(isset($_GET['files']) ? explode($_GET['files']) : false);
 
         } catch (SyntaxErrorException $e) {
 

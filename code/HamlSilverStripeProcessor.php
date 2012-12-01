@@ -1,7 +1,5 @@
 <?php
 
-use MtHaml\Environment;
-
 class HamlSilverStripeProcessor
 {
 
@@ -12,7 +10,7 @@ class HamlSilverStripeProcessor
     protected $header = "<%%-- Compiled from '%s'. Do not edit --%%>";
     protected $stripWhitespace = true;
 
-    public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false, $header = false)
+    public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false, $header = false, $stripWhitespace = true)
     {
 
         $msg = 'Directory does not exist or is not writable: %s';
@@ -20,22 +18,20 @@ class HamlSilverStripeProcessor
         if (file_exists($inputDirectory) && is_writable($inputDirectory)) {
             $this->inputDirectory = $inputDirectory;
         } else {
-            throw new \Exception(sprintf($msg, $inputDirectory));
+            throw new \InvalidArgumentException(sprintf($msg, $inputDirectory));
         }
 
         if (file_exists($outputDirectory) && is_writable($outputDirectory)) {
             $this->outputDirectory = $outputDirectory;
         } else {
-            throw new \Exception(sprintf($msg, $outputDirectory));
+            throw new \InvalidArgumentException(sprintf($msg, $outputDirectory));
         }
 
-        $this->compiler = $compiler ? $compiler : new Environment(
-            'silverstripe',
-            array(
-                'escape_attrs' => false,
-                'enable_escaper' => false
-            )
-        );
+        if (!is_null($compiler)) {
+            $this->compiler = $compiler;
+        } else {
+            throw new \InvalidArgumentException('Invalid compiler');
+        }
 
         if ($extension) {
             $this->extension = $extension;
@@ -44,6 +40,8 @@ class HamlSilverStripeProcessor
         if ($header) {
             $this->header = $header;
         }
+
+        $this->stripWhitespace = $stripWhitespace;
 
     }
 
@@ -121,11 +119,6 @@ class HamlSilverStripeProcessor
 
         }
 
-    }
-
-    public function setStripWhitespace($val)
-    {
-        $this->stripWhitespace = (bool) $val;
     }
 
     protected function glob($pattern)
