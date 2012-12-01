@@ -9,7 +9,8 @@ class HamlSilverStripeProcessor
     protected $outputDirectory;
     protected $compiler;
     protected $extension = '.ss.haml';
-    protected $header = "<%%--\nCompiled from '%s'\nDo not edit\n--%%>";
+    protected $header = "<%%-- Compiled from '%s'. Do not edit --%%>";
+    protected $stripWhitespace = true;
 
     public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false, $header = false)
     {
@@ -83,6 +84,24 @@ class HamlSilverStripeProcessor
                             $file
                         );
 
+                    if ($this->stripWhitespace) {
+
+                        $compiledString = preg_replace(
+                            array(
+                                '/\>[^\S ]+/s', //strip whitespaces after tags, except space
+                                '/[^\S ]+\</s', //strip whitespaces before tags, except space
+                                '/(\s)+/s'  // shorten multiple whitespace sequences
+                            ),
+                            array(
+                                '>',
+                                '<',
+                                '\\1'
+                            ),
+                            $compiledString
+                        );
+
+                    }
+
                     if ($compiledString != file_get_contents($templateName)) {
 
                         file_put_contents($templateName, $compiledString);
@@ -104,7 +123,12 @@ class HamlSilverStripeProcessor
 
     }
 
-    public function glob($pattern)
+    public function setStripWhitespace($val)
+    {
+        $this->stripWhitespace = (bool) $val;
+    }
+
+    protected function glob($pattern)
     {
 
         $files = glob($pattern);
