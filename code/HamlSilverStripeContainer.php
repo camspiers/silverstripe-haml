@@ -12,6 +12,8 @@ class HamlSilverStripeContainer extends Pimple
         'processor.strip_whitespace' => true,
         'environment.escape_attrs'   => false,
         'environment.enable_escaper' => false,
+        'environment.type'           => 'silverstripe',
+        'environment.extra_options'  => array()
     );
 
     public function __construct()
@@ -21,8 +23,8 @@ class HamlSilverStripeContainer extends Pimple
 
         $this['processor'] = function ($c) {
             return new $c['processor.class'](
-                $c['processor.input_directory'] ? $c['processor.input_directory'] : THEMES_PATH . '/' . SSViewer::current_theme(),
-                $c['processor.output_directory'] ? $c['processor.output_directory'] : THEMES_PATH . '/' . SSViewer::current_theme(),
+                $c['processor.input_directory'] ? $c['processor.input_directory'] : THEMES_PATH . '/' . SSViewer::current_theme() . '/haml',
+                $c['processor.output_directory'] ? $c['processor.output_directory'] : THEMES_PATH . '/' . SSViewer::current_theme() . '/templates',
                 $c['compiler'],
                 $c['processor.extension'],
                 $c['processor.header'],
@@ -36,11 +38,11 @@ class HamlSilverStripeContainer extends Pimple
 
         $this['compiler'] = $this->share(function ($c) {
             return new MtHaml\Environment(
-                'silverstripe',
-                array(
+                $c['environment.type'],
+                array_merge(array(
                     'escape_attrs' => $c['environment.escape_attrs'],
                     'enable_escaper' => $c['environment.enable_escaper']
-                )
+                ), $c['environment.extra_options'])
             );
         });
 
