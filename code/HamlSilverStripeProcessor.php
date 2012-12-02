@@ -10,7 +10,7 @@ class HamlSilverStripeProcessor
     protected $header = "<%%-- Compiled from '%s'. Do not edit --%%>";
     protected $stripWhitespace = true;
 
-    public function __construct($inputDirectory, $outputDirectory, Environment $compiler = null, $extension = false, $header = false, $stripWhitespace = true)
+    public function __construct($inputDirectory, $outputDirectory, MtHaml\Environment $compiler = null, $extension = false, $header = false, $stripWhitespace = true)
     {
 
         $msg = 'Directory does not exist or is not writable: %s';
@@ -27,7 +27,7 @@ class HamlSilverStripeProcessor
             throw new \InvalidArgumentException(sprintf($msg, $outputDirectory));
         }
 
-        if (!is_null($compiler)) {
+        if (!is_null($compiler) && $compiler instanceof MtHaml\Environment) {
             $this->compiler = $compiler;
         } else {
             throw new \InvalidArgumentException('Invalid compiler');

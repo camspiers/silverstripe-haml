@@ -23,7 +23,7 @@ class HamlSilverStripeContainer extends Pimple
             return new $c['processor.class'](
                 $c['processor.input_directory'],
                 $c['processor.output_directory'],
-                $c['processor.compiler'],
+                $c['compiler'],
                 $c['processor.extension'],
                 $c['processor.header'],
                 $c['processor.strip_whitespace']
