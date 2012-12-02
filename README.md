@@ -53,7 +53,7 @@ SilverStripe haml provides two main mechanisms for compilation:
 
 ##Getting started
 
-To get started, create a folder called `haml` in your current theme.
+To get started, create a folder called `haml` in your current theme (SS haml compiles from your current theme by default).
 
 	themes/mytheme/haml
 
@@ -68,6 +68,41 @@ For example:
 In this folder place your haml files, the default extension is `.ss.haml`
 
 Every haml file will be compiled into the appropriate location in `themes/mytheme/templates`
+
+###Configuration
+
+SilverStripe haml uses a dependency injection container (an extension of `Pimple`) to allow configuration and DI for all objects used.
+
+**Options**
+
+* processor.class
+* processor.input_directory
+* processor.output_directory
+* processor.extension
+* processor.header
+* processor.strip_whitespace
+* environment.escape_attrs
+* environment.enable_escaper
+
+`mysite/_config.php`
+
+```
+HamlSilverStripeContainer::extendConfig(array(
+	'processor.strip_whitespace' => false
+));
+```
+
+Any service provided by SilverStripe haml can be accessed by instantiating the Container (see `HamlSilverStripeController` for an example).
+
+```
+$dic = new HamlSilverStripeContainer;
+
+$processor = $dic['processor'];
+$colors = $dic['colors'];
+$compiler = $dic['compiler'];
+```
+
+See [Pimple](http://pimple.sensiolabs.org/) for more information.
 
 ##Haml Compilation
 
