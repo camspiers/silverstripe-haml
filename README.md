@@ -1,16 +1,13 @@
 #SilverStripe Haml
 
-##Dependancies
+##Overview
 
-SilverStripe haml depends directly on numerous libraries others have developed. The work of the authors of the following projects is greatly appreciated:
+SilverStripe haml is implemented by compiling `ss.haml` files into `.ss` template files. In haml you can implement anything you can in straight `.ss` files.
 
-* `MtHaml`
-* `grunt`
-* `grunt-contrib-watch`
-* `colors.php`
-* `composer`
-* `optimist`
-* `Pimple`
+SilverStripe haml provides two main mechanisms for compilation:
+
+* A grunt build process which uses `grunt-contrib-watch` to watch your `.ss.haml` files for changes and compile when changed.
+* A SilverStripe controller executable via `sake` or url.
 
 ##Installation
 
@@ -41,15 +38,6 @@ Create or edit a `composer.json` file in the root of your SilverStripe project, 
 Currently SilverStripe haml is in development so it isn't available through packagist (nor are my customisations needed from `MtHaml`).
 
 After completing this step, navigate in Terminal or similar to the SilverStripe root directory and run `composer install` or `composer update` depending on whether or not you have composer already in use.
-
-##Overview
-
-SilverStripe haml is implemented by compiling `ss.haml` files into `.ss` template files. In haml you can implement anything you can in straight `.ss` files.
-
-SilverStripe haml provides two main mechanisms for compilation:
-
-* A grunt build process which uses `grunt-contrib-watch` to watch your `.ss.haml` files for changes and compile when changed.
-* A SilverStripe controller executable via `sake` or url.
 
 ##Getting started
 
@@ -144,6 +132,18 @@ This project follows the standards defined in:
 
 * [PSR-1](https://github.com/pmjones/fig-standards/blob/psr-1-style-guide/proposed/PSR-1-basic.md)
 * [PSR-2](https://github.com/pmjones/fig-standards/blob/psr-1-style-guide/proposed/PSR-2-advanced.md)
+
+##Dependancies
+
+SilverStripe haml depends directly on numerous libraries others have developed. The work of the authors of the following projects is greatly appreciated:
+
+* `MtHaml`
+* `grunt`
+* `grunt-contrib-watch`
+* `colors.php`
+* `composer`
+* `optimist`
+* `Pimple`
 
 ---
 ##License
