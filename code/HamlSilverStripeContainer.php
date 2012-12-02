@@ -4,16 +4,17 @@ class HamlSilverStripeContainer extends Pimple
 {
 
     protected static $config = array(
-        'processor.class'            => 'HamlSilverStripeProcessor',
-        'processor.input_directory'  => false,
-        'processor.output_directory' => false,
-        'processor.extension'        => false,
-        'processor.header'           => false,
-        'processor.strip_whitespace' => true,
-        'environment.escape_attrs'   => false,
-        'environment.enable_escaper' => false,
-        'environment.type'           => 'silverstripe',
-        'environment.extra_options'  => array()
+        'processor.class'             => 'HamlSilverStripeProcessor',
+        'processor.input_directory'   => false,
+        'processor.output_directory'  => false,
+        'processor.watch_extension'   => false,
+        'processor.compile_extension' => false,
+        'processor.header'            => false,
+        'processor.strip_whitespace'  => true,
+        'environment.escape_attrs'    => false,
+        'environment.enable_escaper'  => false,
+        'environment.type'            => 'silverstripe',
+        'environment.extra_options'   => array()
     );
 
     public function __construct()
@@ -26,7 +27,8 @@ class HamlSilverStripeContainer extends Pimple
                 $c['processor.input_directory'] ? $c['processor.input_directory'] : THEMES_PATH . '/' . SSViewer::current_theme() . '/haml',
                 $c['processor.output_directory'] ? $c['processor.output_directory'] : THEMES_PATH . '/' . SSViewer::current_theme() . '/templates',
                 $c['compiler'],
-                $c['processor.extension'],
+                $c['processor.watch_extension'],
+                $c['processor.compile_extension'],
                 $c['processor.header'],
                 $c['processor.strip_whitespace']
             );
@@ -36,7 +38,7 @@ class HamlSilverStripeContainer extends Pimple
             return new Colors\Color('');
         });
 
-        $this['compiler'] = $this->share(function ($c) {
+        $this['environment'] = $this->share(function ($c) {
             return new MtHaml\Environment(
                 $c['environment.type'],
                 array_merge(array(

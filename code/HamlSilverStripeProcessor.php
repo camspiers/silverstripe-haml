@@ -5,12 +5,13 @@ class HamlSilverStripeProcessor
 
     protected $inputDirectory;
     protected $outputDirectory;
-    protected $compiler;
-    protected $extension = '.ss.haml';
+    protected $environment;
+    protected $watchExtension = '.ss.haml';
+    protected $compileExtension = '.ss';
     protected $header = "<%%-- Compiled from '%s'. Do not edit --%%>";
     protected $stripWhitespace = true;
 
-    public function __construct($inputDirectory, $outputDirectory, MtHaml\Environment $compiler = null, $extension = false, $header = false, $stripWhitespace = true)
+    public function __construct($inputDirectory, $outputDirectory, MtHaml\Environment $environment = null, $watchExtension = false, $compileExtension = false, $header = false, $stripWhitespace = true)
     {
 
         $msg = 'Directory does not exist or is not writable: %s';
@@ -27,14 +28,18 @@ class HamlSilverStripeProcessor
             throw new \InvalidArgumentException(sprintf($msg, $outputDirectory));
         }
 
-        if (!is_null($compiler) && $compiler instanceof MtHaml\Environment) {
-            $this->compiler = $compiler;
+        if (!is_null($environment) && $environment instanceof MtHaml\Environment) {
+            $this->environment = $environment;
         } else {
-            throw new \InvalidArgumentException('Invalid compiler');
+            throw new \InvalidArgumentException('Invalid environment');
         }
 
-        if ($extension) {
-            $this->extension = $extension;
+        if ($watchExtension) {
+            $this->watchExtension = $watchExtension;
+        }
+
+        if ($compileExtension) {
+            $this->compileExtension = $compileExtension;
         }
 
         if ($header) {
@@ -48,7 +53,7 @@ class HamlSilverStripeProcessor
     public function process($files = false)
     {
 
-        $files = is_array($files) ? $files : $this->glob($this->inputDirectory . '/*' . $this->extension);
+        $files = is_array($files) ? $files : $this->glob($this->inputDirectory . '/*' . $this->watchExtension);
         $compiled = array();
 
         if (is_array($files)) {
@@ -57,7 +62,7 @@ class HamlSilverStripeProcessor
 
                 if (file_exists($file)) {
 
-                    $basename = basename($file, $this->extension);
+                    $basename = basename($file, $this->watchExtension);
 
                     $dirname = str_replace(
                         $this->inputDirectory,
@@ -71,13 +76,13 @@ class HamlSilverStripeProcessor
 
                     }
 
-                    $templateName = $dirname . '/' . $basename . '.ss';
+                    $templateName = $dirname . '/' . $basename . $this->compileExtension;
                     $prettyHamlName = str_replace($this->inputDirectory, basename($this->inputDirectory), $file);
                     $prettyTemplateName = str_replace($this->outputDirectory, basename($this->outputDirectory), $templateName);
 
                     $compiledString =
                         sprintf($this->header, $prettyHamlName) .
-                        $this->compiler->compileString(
+                        $this->environment->compileString(
                             file_get_contents($file),
                             $file
                         );
