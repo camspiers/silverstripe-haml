@@ -2,14 +2,14 @@ module.exports = function( grunt ) {
 
   var exec  = require('child_process').exec,
       argv  = require('optimist').argv,
-      theme = argv.theme ? argv.theme : false;
+      pattern = argv.pattern ? argv.pattern : '../themes/*/haml/**/*.ss.haml';
   
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
 
   grunt.initConfig( {
     watch: {
       haml: {
-        files: [ '../themes/' + ( theme ? theme : '*' ) + '/haml/**/*.ss.haml' ],
+        files: [ pattern ],
         tasks: [ 'haml' ],
         options: {
           debounceDelay: 2000
@@ -20,15 +20,10 @@ module.exports = function( grunt ) {
   
   grunt.registerTask( 'haml', function () {
 
-    var done = this.async(),
-        args = [ 'haml/process' ];
-
-    if ( theme ) {
-      args.push( '--theme ' + theme );
-    }
+    var done = this.async();
 
     exec(
-      '../sapphire/sake ' + args.join( ' ' ),
+      '../sapphire/sake haml/process',
       function ( error, stdout, stderr ) {
         var hasErr = false;
         if ( stdout ) {
