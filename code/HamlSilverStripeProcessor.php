@@ -84,19 +84,7 @@ class HamlSilverStripeProcessor
 
                     if ($this->stripWhitespace) {
 
-                        $compiledString = preg_replace(
-                            array(
-                                '/\>[^\S ]+/s', //strip whitespaces after tags, except space
-                                '/[^\S ]+\</s', //strip whitespaces before tags, except space
-                                '/(\s)+/s'  // shorten multiple whitespace sequences
-                            ),
-                            array(
-                                '>',
-                                '<',
-                                '\\1'
-                            ),
-                            $compiledString
-                        );
+                        $compiledString = trim(preg_replace('/>\s+</', '><', $compiledString));
 
                     }
 
