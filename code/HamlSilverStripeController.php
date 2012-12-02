@@ -14,7 +14,9 @@ class HamlSilverStripeController extends CliController
         $c = $dic['colors'];
 
         if (Director::is_cli() && !isset($_GET['nocolor'])) {
+
             $c->setForceStyle(true);
+            
         }
 
         try {

@@ -21,8 +21,8 @@ class HamlSilverStripeContainer extends Pimple
 
         $this['processor'] = function ($c) {
             return new $c['processor.class'](
-                $c['processor.input_directory'],
-                $c['processor.output_directory'],
+                $c['processor.input_directory'] ? $c['processor.input_directory'] : THEMES_PATH . '/' . SSViewer::current_theme(),
+                $c['processor.output_directory'] ? $c['processor.output_directory'] : THEMES_PATH . '/' . SSViewer::current_theme(),
                 $c['compiler'],
                 $c['processor.extension'],
                 $c['processor.header'],

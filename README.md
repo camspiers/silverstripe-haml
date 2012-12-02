@@ -10,6 +10,7 @@ SilverStripe haml depends directly on numerous libraries others have developed. 
 * `colors.php`
 * `composer`
 * `optimist`
+* `Pimple`
 
 ##Installation
 
