@@ -17,7 +17,7 @@ class HamlSilverStripeContainer extends Pimple
         'environment.extra_options'   => array()
     );
 
-    public function __construct()
+    public function __construct($config = null)
     {
 
         parent::__construct();
@@ -51,6 +51,16 @@ class HamlSilverStripeContainer extends Pimple
         foreach (self::$config as $key => $value) {
 
             $this[$key] = $value;
+
+        }
+
+        if (is_array($config)) {
+
+            foreach ($config as $key => $value) {
+
+                $this[$key] = $value;
+
+            }
 
         }
 
